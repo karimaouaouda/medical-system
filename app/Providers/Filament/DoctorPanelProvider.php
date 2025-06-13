@@ -2,8 +2,10 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Doctor\Pages\Override\Auth\Register as DoctorRegister;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
+use App\Http\Middleware\EnsureDoctorApproved;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
 use Filament\Pages;
@@ -25,6 +27,7 @@ class DoctorPanelProvider extends PanelProvider
         return $panel
             ->id('doctor')
             ->path('doctor')
+            ->registration(DoctorRegister::class)
             ->colors([
                 'primary' => Color::Amber,
             ])
@@ -32,6 +35,8 @@ class DoctorPanelProvider extends PanelProvider
             ->discoverPages(in: app_path('Filament/Doctor/Pages'), for: 'App\\Filament\\Doctor\\Pages')
             ->pages([
                 Pages\Dashboard::class,
+                \App\Filament\Doctor\Pages\ManageFollowRequests::class,
+                \App\Filament\Doctor\Pages\ManageAppointments::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Doctor/Widgets'), for: 'App\\Filament\\Doctor\\Widgets')
             ->widgets([
@@ -51,6 +56,7 @@ class DoctorPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+                EnsureDoctorApproved::class,
             ]);
     }
 }

@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
+use App\Enums\UserRole;
+use App\Models\FollowRequest;
+use App\Models\Appointment;
 
 class User extends Authenticatable
 {
@@ -22,6 +25,9 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'document_path',
+        'approved_at',
     ];
 
     /**
@@ -44,6 +50,8 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'role' => UserRole::class,
+            'approved_at' => 'datetime',
         ];
     }
 
@@ -57,5 +65,25 @@ class User extends Authenticatable
             ->take(2)
             ->map(fn ($word) => Str::substr($word, 0, 1))
             ->implode('');
+    }
+
+    public function receivedFollowRequests()
+    {
+        return $this->hasMany(FollowRequest::class, 'doctor_id');
+    }
+
+    public function sentFollowRequests()
+    {
+        return $this->hasMany(FollowRequest::class, 'patient_id');
+    }
+
+    public function appointmentsAsDoctor()
+    {
+        return $this->hasMany(Appointment::class, 'doctor_id');
+    }
+
+    public function appointmentsAsPatient()
+    {
+        return $this->hasMany(Appointment::class, 'patient_id');
     }
 }
