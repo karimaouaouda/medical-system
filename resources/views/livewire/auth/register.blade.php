@@ -26,6 +26,21 @@
             placeholder="email@example.com"
         />
 
+        <!-- Role -->
+        <flux:input
+            wire:model="role"
+            :label="__('Role')"
+            type="text"
+            required
+        />
+
+        @if ($role === \App\Enums\UserRole::Doctor->value)
+            <flux:file-upload wire:model="document" label="{{ __('Documents') }}" />
+            <div class="text-sm text-gray-500">
+                <a href="{{ asset('doctor-registration-steps.txt') }}" class="underline">{{ __('Read the registration steps') }}</a>
+            </div>
+        @endif
+
         <!-- Password -->
         <flux:input
             wire:model="password"

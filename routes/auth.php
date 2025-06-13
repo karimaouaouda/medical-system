@@ -8,10 +8,19 @@ use App\Livewire\Auth\Register;
 use App\Livewire\Auth\ResetPassword;
 use App\Livewire\Auth\VerifyEmail;
 use Illuminate\Support\Facades\Route;
+use App\Enums\UserRole;
 
 Route::middleware('guest')->group(function () {
     Route::get('login', Login::class)->name('login');
-    Route::get('register', Register::class)->name('register');
+    Route::get('register', Register::class)
+        ->name('register')
+        ->defaults('role', UserRole::Patient->value);
+    Route::get('register/patient', Register::class)
+        ->name('register.patient')
+        ->defaults('role', UserRole::Patient->value);
+    Route::get('register/doctor', Register::class)
+        ->name('register.doctor')
+        ->defaults('role', UserRole::Doctor->value);
     Route::get('forgot-password', ForgotPassword::class)->name('password.request');
     Route::get('reset-password/{token}', ResetPassword::class)->name('password.reset');
 });
