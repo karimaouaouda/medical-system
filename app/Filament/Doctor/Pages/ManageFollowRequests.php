@@ -4,7 +4,7 @@ namespace App\Filament\Doctor\Pages;
 
 use App\Enums\FollowRequestStatus;
 use App\Models\FollowRequest;
-use Filament\Actions\Action;
+use Filament\Tables\Actions\Action;
 use Filament\Pages\Page;
 use Filament\Tables;
 use Filament\Tables\Concerns\InteractsWithTable;

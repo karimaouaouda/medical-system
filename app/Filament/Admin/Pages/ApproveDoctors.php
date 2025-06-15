@@ -4,9 +4,9 @@ namespace App\Filament\Admin\Pages;
 
 use App\Enums\UserRole;
 use App\Models\User;
-use Filament\Actions\Action;
 use Filament\Pages\Page;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
