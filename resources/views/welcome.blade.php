@@ -12,7 +12,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex items-center">
-                    <a href="#" class="flex-shrink-0 flex items-center">
+                    <a href="{{ route('home') }}" class="flex-shrink-0 flex items-center">
                         <span class="text-2xl font-bold text-blue-600">MedConnect</span>
                     </a>
                 </div>
@@ -25,10 +25,8 @@
                             Login/Register
                         </button>
                         <div class="absolute right-0 w-48 mt-2 py-2 bg-white rounded-md shadow-xl hidden group-hover:block">
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">Login as Patient</a>
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">Register as Patient</a>
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">Login as Doctor</a>
-                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">Register as Doctor</a>
+                            <a href="{{ route('filament.patient.pages.dashboard') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">continue as Patient</a>
+                            <a href="{{ route('filament.doctor.pages.dashboard') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">continue as Doctor</a>
                         </div>
                     </div>
                 </div>
