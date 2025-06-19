@@ -16,4 +16,4 @@ class EditPatient extends EditRecord
             Actions\DeleteAction::make(),
         ];
     }
-} 
+}

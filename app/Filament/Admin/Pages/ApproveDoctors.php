@@ -27,7 +27,14 @@ class ApproveDoctors extends Page implements HasTable
             ->columns([
                 Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\TextColumn::make('email'),
-                Tables\Columns\TextColumn::make('document_path')->label('Document'),
+                Tables\Columns\TextColumn::make('speciality')
+                    ->label('Speciality'),
+                Tables\Columns\TextColumn::make('document_path')
+                    ->formatStateUsing(fn() => 'download')
+                    ->url(function(User $record){
+                        return route('download-doctor-document', ['user' => $record]);
+                    })
+                    ->label('Document'),
             ])
             ->actions([
                 Action::make('approve')

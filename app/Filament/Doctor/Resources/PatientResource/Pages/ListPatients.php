@@ -16,4 +16,4 @@ class ListPatients extends ListRecords
             Actions\CreateAction::make(),
         ];
     }
-} 
+}

@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use App\Filament\Doctor\Pages\Override\Auth\Register as DoctorRegister;
+use App\Filament\Doctor\Pages\Override\DoctorProfilePage;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use App\Http\Middleware\EnsureDoctorApproved;
@@ -27,7 +28,10 @@ class DoctorPanelProvider extends PanelProvider
         return $panel
             ->id('doctor')
             ->path('doctor')
+            ->login()
             ->registration(DoctorRegister::class)
+            ->profile(DoctorProfilePage::class, false)
+            ->databaseNotifications()
             ->colors([
                 'primary' => Color::Amber,
             ])

@@ -1,4 +1,5 @@
 <x-filament::page>
+    @vite('resources/css/app.css')
     <div class="mb-4 flex flex-col gap-4 sm:flex-row sm:items-end">
         <flux:input
             wire:model.debounce.300ms="search"
