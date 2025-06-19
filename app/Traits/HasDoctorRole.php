@@ -45,6 +45,7 @@ trait HasDoctorRole
     }
 
     public function getSpecialityAttribute(){
-        return $this->profile?->specialty?->name ?? "not set";
+
+        return $this->profile->speciality->name;
     }
 }
