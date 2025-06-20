@@ -10,13 +10,13 @@
                 <h3 class="text-lg font-semibold text-gray-900 truncate">
                     {{ $doctor->name }}
                 </h3>
-                <p class="text-sm text-gray-500">{{ $doctor->specialty ?? 'Generalist' }}</p>
+                <p class="text-sm text-gray-500">{{ $doctor->profile->speciality->name ?? 'Generalist' }}</p>
             </div>
         </div>
 
         <div class="mt-4">
             <p class="text-sm text-gray-600 line-clamp-3">
-                {{ $doctor->bio ?? "my bio is something i do" }}
+                {{ $doctor->profile->biography ?? "my bio is something i do" }}
             </p>
         </div>
 

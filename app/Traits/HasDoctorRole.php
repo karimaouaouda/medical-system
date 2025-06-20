@@ -33,9 +33,10 @@ trait HasDoctorRole
         return $this->profile->reviews()->count();
     }
 
-    public function getLanguagesArrayAttribute()
+    public function getLanguagesArrayAttribute(): array
     {
         $languages = $this->profile->languages;
+        $languages = is_array($languages) ? $languages : json_decode($languages, true);
         $langarr = [];
         foreach ($languages as $key => $language) {
             $langarr[] = $language['name'];
@@ -46,6 +47,6 @@ trait HasDoctorRole
 
     public function getSpecialityAttribute(){
 
-        return $this->profile->speciality->name;
+        return $this->profile->speciality->name ?? "Cardiologist";
     }
 }

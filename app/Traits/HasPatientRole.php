@@ -12,6 +12,16 @@ use Illuminate\Support\Facades\DB;
  */
 trait HasPatientRole
 {
+
+    public function doctors(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
+    {
+        return $this->belongsToMany(
+            User::class,
+            'follow_requests',
+            'patient_id',
+            'doctor_id'
+        )->withPivot(['status']);
+    }
     public function isFollowing(User $doctor): bool
     {
         return DB::table('follow_requests')

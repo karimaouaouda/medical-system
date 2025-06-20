@@ -31,6 +31,17 @@ class DoctorProfile extends Model
             json_decode($this->attributes['work_hours'], true);
     }
 
+    public function getLanguagesAttribute()
+    {
+        if (! $this->attributes['languages']) {
+            return [];
+        }
+
+        return is_array($this->attributes['languages']) ?
+            $this->attributes['languages'] :
+            json_decode($this->attributes['languages'], true);
+    }
+
 
     public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {

@@ -25,7 +25,10 @@ class ManageFollowRequests extends Page implements HasTable
         return $table
             ->query(fn (): Builder => FollowRequest::query()->where('doctor_id', auth()->id()))
             ->columns([
-                Tables\Columns\TextColumn::make('patient.name')->label('Patient'),
+                Tables\Columns\TextColumn::make('patient.name')
+                    ->label('Patient'),
+                Tables\Columns\TextColumn::make('patient.email')
+                    ->badge(),
                 Tables\Columns\TextColumn::make('status'),
             ])
             ->actions([

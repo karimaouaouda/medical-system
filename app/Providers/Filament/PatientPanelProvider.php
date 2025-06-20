@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Patient\Pages\Override\Auth\PatientLogin;
 use App\Filament\Patient\Pages\Override\Auth\Register as PatientRegister;
 use App\Filament\Patient\Pages\Override\PatientProfilePage;
 use Filament\Http\Middleware\Authenticate;
@@ -27,12 +28,12 @@ class PatientPanelProvider extends PanelProvider
         return $panel
             ->id('patient')
             ->path('patient')
-            ->login()
+            ->login(PatientLogin::class)
             ->profile(PatientProfilePage::class, false)
             ->registration(PatientRegister::class)
             ->databaseNotifications()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Blue,
             ])
             ->discoverResources(in: app_path('Filament/Patient/Resources'), for: 'App\\Filament\\Patient\\Resources')
             ->discoverPages(in: app_path('Filament/Patient/Pages'), for: 'App\\Filament\\Patient\\Pages')

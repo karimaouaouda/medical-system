@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Doctor\Pages\Override\Auth\DoctorLogin;
 use App\Filament\Doctor\Pages\Override\Auth\Register as DoctorRegister;
 use App\Filament\Doctor\Pages\Override\DoctorProfilePage;
 use Filament\Http\Middleware\Authenticate;
@@ -28,12 +29,12 @@ class DoctorPanelProvider extends PanelProvider
         return $panel
             ->id('doctor')
             ->path('doctor')
-            ->login()
+            ->login(DoctorLogin::class)
             ->registration(DoctorRegister::class)
             ->profile(DoctorProfilePage::class, false)
             ->databaseNotifications()
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Green,
             ])
             ->discoverResources(in: app_path('Filament/Doctor/Resources'), for: 'App\\Filament\\Doctor\\Resources')
             ->discoverPages(in: app_path('Filament/Doctor/Pages'), for: 'App\\Filament\\Doctor\\Pages')
@@ -44,8 +45,6 @@ class DoctorPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Doctor/Widgets'), for: 'App\\Filament\\Doctor\\Widgets')
             ->widgets([
-                Widgets\AccountWidget::class,
-                Widgets\FilamentInfoWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,

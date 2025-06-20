@@ -63,7 +63,10 @@ class DoctorProfile extends ViewRecord
     {
         parent::mount($record);
 
-        $review = Filament::auth()->user()->reviews()->where('doctor_id', $this->record->id)->first();
+        $review = Filament::auth()
+            ->user()
+            ->reviews()
+            ->where('doctor_id', $this->record->id)->first();
 
         if($review){
             $this->review_form->fill($review->toArray());
@@ -105,12 +108,16 @@ class DoctorProfile extends ViewRecord
     }
 
     public function saveReview(){
+
         $state = $this->review_form->getState();
+
         $state['doctor_id'] = $this->record->profile->id;
+
         $review = Filament::auth()->user()->reviews()->updateOrCreate([
             'doctor_id' => $state['doctor_id'],
             'patient_id' => Filament::auth()->id()
         ], $state);
+
         Notification::make()
             ->title("review created")
             ->success()

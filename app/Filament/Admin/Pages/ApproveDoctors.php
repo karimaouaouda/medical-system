@@ -5,6 +5,7 @@ namespace App\Filament\Admin\Pages;
 use App\Enums\UserRole;
 use App\Models\User;
 use Filament\Pages\Page;
+use Filament\Support\Colors\Color;
 use Filament\Tables;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Concerns\InteractsWithTable;
@@ -39,7 +40,11 @@ class ApproveDoctors extends Page implements HasTable
             ->actions([
                 Action::make('approve')
                     ->label('Approve')
+                    ->icon('heroicon-o-check')
                     ->action(fn (User $record) => $record->update(['approved_at' => now()])),
+                Tables\Actions\DeleteAction::make()
+                    ->label('reject')
+                    ->requiresConfirmation()
             ]);
     }
 }

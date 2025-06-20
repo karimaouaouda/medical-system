@@ -58,7 +58,7 @@ class DoctorProfilePage extends EditProfile
 
         $work = Auth::user()->profile()->first()?->toArray() ?? $this->work;
 
-        $work['work_hours'] = json_decode($work['work_hours'], true);
+        $work['work_hours'] = is_array($work['work_hours']) ? $work['work_hours'] : json_decode($work['work_hours'], true);
 
         $this->address_form->fill($address);
 
@@ -316,12 +316,14 @@ class DoctorProfilePage extends EditProfile
     {
         try{
             $this->work['work_hours'] = json_encode($this->work['work_hours']);
+            $this->work['languages'] = json_encode($this->work['languages']);
 
             $work = Auth::user()->profile()->firstOrCreate([], $this->work);
 
             $work->update($this->work);
 
             $this->work['work_hours'] = json_decode($this->work['work_hours'], true);
+            $this->work['languages'] = json_decode($this->work['languages'], true);
 
             Notification::make()
                 ->title('saved')

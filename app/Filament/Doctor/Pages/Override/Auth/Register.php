@@ -15,12 +15,23 @@ use Filament\Forms\Components\Wizard;
 use Filament\Http\Responses\Auth\Contracts\RegistrationResponse;
 use Filament\Pages\Auth\Register as BaseRegister;
 use Filament\Forms\Form;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Validation\Rules\Enum;
 
 class Register extends BaseRegister
 {
 
     protected ?string $maxWidth = '2xl';
+
+    protected ?string $heading = "sign up - doctor";
+
+    protected static ?string $title = "sign up - doctor";
+
+    public function getHeading(): string|Htmlable
+    {
+        return $this->heading;
+    }
+
     protected function getForms(): array
     {
         return [
@@ -75,7 +86,6 @@ class Register extends BaseRegister
 
         return $data;
     }
-
     public function register(): ?RegistrationResponse
     {
         try {
