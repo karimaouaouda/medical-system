@@ -12,8 +12,20 @@ class EnsureDoctorApproved
     {
         $user = $request->user();
 
-        if ($user && $user->role === UserRole::Doctor && $user->approved_at === null) {
-            return redirect(route('waiting-approval'));
+        $routes = [
+            'filament.doctor.pages.waiting-approving',
+            'filament.doctor.auth.logout',
+            'filament.doctor.auth.login',
+            'filament.doctor.auth.register',
+        ];
+
+        if (
+            $user &&
+            $user->role === UserRole::Doctor &&
+            $user->approved_at === null &&
+            !$request->route()->named(...$routes)
+        ) {
+            return redirect(route('filament.doctor.pages.waiting-approving'));
         }
 
         return $next($request);

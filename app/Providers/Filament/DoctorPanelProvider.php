@@ -5,6 +5,7 @@ namespace App\Providers\Filament;
 use App\Filament\Doctor\Pages\Override\Auth\DoctorLogin;
 use App\Filament\Doctor\Pages\Override\Auth\Register as DoctorRegister;
 use App\Filament\Doctor\Pages\Override\DoctorProfilePage;
+use App\Filament\Doctor\Pages\WaitingApproving;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use App\Http\Middleware\EnsureDoctorApproved;
@@ -42,6 +43,7 @@ class DoctorPanelProvider extends PanelProvider
                 Pages\Dashboard::class,
                 \App\Filament\Doctor\Pages\ManageFollowRequests::class,
                 \App\Filament\Doctor\Pages\ManageAppointments::class,
+                WaitingApproving::class
             ])
             ->discoverWidgets(in: app_path('Filament/Doctor/Widgets'), for: 'App\\Filament\\Doctor\\Widgets')
             ->widgets([

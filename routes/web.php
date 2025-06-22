@@ -49,7 +49,4 @@ Route::get('/download/doctor-doc/{user}', function(User $user){
         ->download($user->getAttribute('document_path'));
 })->name('download-doctor-document');
 
-Route::get('waiting-approval', \App\Filament\Doctor\Pages\WaitingApproving::class)->name('waiting-approval');
-
-
 require __DIR__.'/auth.php';
