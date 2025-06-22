@@ -32,6 +32,15 @@ class UserResource extends Resource
         return false;
     }
 
+    public static function getEloquentQuery(): Builder
+    {
+        return User::query()
+            ->whereNot(function(Builder $query){
+                $query->where('role', 'doctor')
+                    ->where('approved_at', null);
+            });
+    }
+
     /**
      * @throws \Exception
      */

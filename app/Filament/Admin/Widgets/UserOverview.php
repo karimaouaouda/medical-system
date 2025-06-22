@@ -15,7 +15,7 @@ class UserOverview extends BaseWidget
         return [
             $this->doctorsStat(),
             $this->patientsStat(),
-            $this->adminsStat()
+            // $this->adminsStat()
         ];
     }
 
