@@ -13,7 +13,7 @@ class EnsureDoctorApproved
         $user = $request->user();
 
         if ($user && $user->role === UserRole::Doctor && $user->approved_at === null) {
-            abort(403, 'Account awaiting approval.');
+            return redirect(route('waiting-approval'));
         }
 
         return $next($request);
