@@ -21,16 +21,24 @@ class ApproveDoctors extends Page implements HasTable
 
     protected static string $view = 'filament.admin.pages.approve-doctors';
 
+    public function getQuery(): Builder
+    {
+        return User::query()->where('role', UserRole::Doctor)
+                    ->whereHas('doctorProfile', function(Builder $query) {
+                        $query->whereNull('approved_at');
+                    });
+    }
+
     public function table(Table $table): Table
     {
         return $table
-            ->query(fn (): Builder => User::query()->where('role', UserRole::Doctor)->whereNull('approved_at'))
+            ->query($this->getQuery())
             ->columns([
                 Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\TextColumn::make('email'),
                 Tables\Columns\TextColumn::make('speciality')
                     ->label('Speciality'),
-                Tables\Columns\TextColumn::make('document_path')
+                Tables\Columns\TextColumn::make('doctorProfile.document_path')
                     ->formatStateUsing(fn() => 'download')
                     ->url(function(User $record){
                         return route('download-doctor-document', ['user' => $record]);
@@ -41,7 +49,7 @@ class ApproveDoctors extends Page implements HasTable
                 Action::make('approve')
                     ->label('Approve')
                     ->icon('heroicon-o-check')
-                    ->action(fn (User $record) => $record->update(['approved_at' => now()])),
+                    ->action(fn (User $record) => $record->doctorProfile->update(['approved_at' => now()])),
                 Tables\Actions\DeleteAction::make()
                     ->label('reject')
                     ->requiresConfirmation()

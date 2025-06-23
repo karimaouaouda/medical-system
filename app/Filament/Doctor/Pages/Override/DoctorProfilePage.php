@@ -266,7 +266,6 @@ class DoctorProfilePage extends EditProfile
             ->disk('public')
             ->directory('users-avatar')
             ->avatar();
-
     }
 
 

@@ -14,7 +14,6 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Wizard;
 use Filament\Http\Responses\Auth\Contracts\RegistrationResponse;
 use Filament\Pages\Auth\Register as BaseRegister;
-use Filament\Forms\Form;
 use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Validation\Rules\Enum;
 
@@ -111,7 +110,8 @@ class Register extends BaseRegister
             $user = $this->handleRegistration($data);
 
             $user->profile()->create([
-                'speciality_id' => $data['speciality_id']
+                'speciality_id' => $data['speciality_id'],
+                'document_path' => $data['document_path']
             ]);
 
             $this->form->model($user)->saveRelationships();

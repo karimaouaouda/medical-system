@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Enums\UserRole;
+use App\Enums\UserRoles;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -21,8 +22,8 @@ class EnsureDoctorApproved
 
         if (
             $user &&
-            $user->role === UserRole::Doctor &&
-            $user->approved_at === null &&
+            $user->role === UserRoles::DOCTOR &&
+            $user->profile->approved_at === null &&
             !$request->route()->named(...$routes)
         ) {
             return redirect(route('filament.doctor.pages.waiting-approving'));

@@ -46,7 +46,7 @@ Route::get('/download-requirements', function(){
 
 Route::get('/download/doctor-doc/{user}', function(User $user){
     return \Illuminate\Support\Facades\Storage::disk('public')
-        ->download($user->getAttribute('document_path'));
+        ->download($user->doctorProfile->getAttribute('document_path'));
 })->name('download-doctor-document');
 
 require __DIR__.'/auth.php';

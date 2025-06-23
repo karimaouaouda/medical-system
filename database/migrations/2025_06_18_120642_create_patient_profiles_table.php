@@ -17,6 +17,8 @@ return new class extends Migration
             $table->enum('blood_type', ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-']);
             $table->float('weight')->default(50);
             $table->float('height')->default(150);
+            $table->json('meals')
+                ->nullable();
             $table->timestamps();
         });
     }

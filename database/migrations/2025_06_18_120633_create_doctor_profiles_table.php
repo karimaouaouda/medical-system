@@ -23,6 +23,8 @@ return new class extends Migration
                 ->nullable();
             $table->json('work_hours')
                 ->nullable();
+            $table->string('document_path');
+            $table->timestamp('approved_at')->nullable();
             $table->timestamps();
         });
     }

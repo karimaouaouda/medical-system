@@ -13,6 +13,8 @@ class DoctorProfile extends Model
         'biography',
         'languages',
         'work_hours',
+        'document_path',
+        'approved_at',
     ];
 
     protected $casts = [

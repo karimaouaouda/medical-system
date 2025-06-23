@@ -2,8 +2,12 @@
 
 namespace App\Traits;
 
+use App\Enums\UserRoles;
+use App\Models\DoctorProfile;
+use App\Models\Medication;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 trait HasDoctorRole
 {
@@ -11,6 +15,21 @@ trait HasDoctorRole
     {
         return $this->belongsToMany(User::class, 'follow_requests', 'doctor_id', 'patient_id')
             ->wherePivot('status', 'accepted');
+    }
+
+    public function doctorProfile()
+    {
+        return $this->hasOne(DoctorProfile::class);
+    }
+
+    public function isDoctor() : bool
+    {
+        return $this->getAttribute('role') == UserRoles::DOCTOR;
+    }
+
+    public function medications(): HasMany
+    {
+        return $this->hasMany(Medication::class, 'doctor_id');
     }
 
     public function getPatientsCountAttribute(): int

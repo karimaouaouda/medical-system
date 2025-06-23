@@ -11,6 +11,11 @@ class PatientProfile extends Model
         'blood_type',
         'weight',
         'height',
+        'meals'
+    ];
+
+    protected $casts = [
+        'meals' => 'array'
     ];
 
 

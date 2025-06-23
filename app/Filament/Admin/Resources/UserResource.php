@@ -37,7 +37,9 @@ class UserResource extends Resource
         return User::query()
             ->whereNot(function(Builder $query){
                 $query->where('role', 'doctor')
-                    ->where('approved_at', null);
+                    ->whereHas('doctorProfile', function(Builder $query){
+                        $query->whereNull('approved_at');
+                    });
             });
     }
 
