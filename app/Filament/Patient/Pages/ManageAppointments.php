@@ -8,6 +8,7 @@ use App\Enums\UserRole;
 use App\Models\Appointment;
 use App\Models\User;
 use Filament\Actions\Action;
+use Filament\Facades\Filament;
 use Filament\Pages\Page;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Select;
@@ -43,7 +44,7 @@ class ManageAppointments extends Page implements HasTable
                             ->options(
                                 User::where('role', UserRole::Doctor)
                                     ->whereHas('receivedFollowRequests', function ($query) {
-                                        $query->where('patient_id', auth()->id())
+                                        $query->where('patient_id', Filament::auth()->id())
                                             ->where('status', FollowRequestStatus::Accepted);
                                     })
                                     ->pluck('name', 'id')
@@ -52,7 +53,7 @@ class ManageAppointments extends Page implements HasTable
                         DateTimePicker::make('scheduled_at')->required(),
                     ])
                     ->using(function (array $data) {
-                        $data['patient_id'] = auth()->id();
+                        $data['patient_id'] = Filament::auth()->id();
                         $data['status'] = AppointmentStatus::Pending;
                         Appointment::create($data);
                     }),
