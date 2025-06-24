@@ -66,6 +66,6 @@ trait HasDoctorRole
 
     public function getSpecialityAttribute(){
 
-        return $this->profile->speciality->name ?? "Cardiologist";
+        return $this->doctorProfile->speciality->name ?? "Cardiologist";
     }
 }
