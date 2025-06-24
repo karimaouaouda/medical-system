@@ -27,7 +27,7 @@
                 </svg>
                 <span class="text-sm text-gray-500">{{ $doctor->patients_count ?? 10 }} Patients</span>
             </div>
-            <a href="{{ route('filament.patient.resources.doctors.view', ['record' => $doctor->id]) }}"
+            <a href="{{ route('filament.patient.resources.doctors.view', ['record' => $doctor->doctorProfile->id]) }}"
                 class="inline-flex items-center px-3 py-1.5 border border-transparent text-sm font-medium rounded-md text-blue-700 bg-blue-100 hover:bg-blue-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                 View Profile
             </a>
