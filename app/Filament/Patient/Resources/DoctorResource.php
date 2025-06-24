@@ -27,7 +27,10 @@ class DoctorResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return User::query();
+        return User::query()
+            ->whereHas('patients', function(Builder $query) {
+                $query->where('patient_id', Filament::auth()->id());
+            });
     }
 
     public static function canCreate(): bool
