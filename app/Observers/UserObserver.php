@@ -15,6 +15,10 @@ class UserObserver
     public function created(User $user): void
     {
 
+        if( app()->runningInConsole() ){
+            return;
+        }
+
         // Send a notification to the admin when a new user is created
         $admin = User::where('role', 'admin')->first(); // Assuming admin users have a specific role
         if ($admin) {
