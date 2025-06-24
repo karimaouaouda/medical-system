@@ -55,7 +55,7 @@ class ManageAppointments extends Page implements HasTable
                     ->using(function (array $data) {
                         $data['patient_id'] = Filament::auth()->id();
                         $data['status'] = AppointmentStatus::Pending;
-                        Appointment::create($data);
+                        return Appointment::create($data);
                     }),
             ]);
     }
