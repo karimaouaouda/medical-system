@@ -27,6 +27,7 @@
                         <div class="absolute right-0 w-48 mt-2 py-2 bg-white rounded-md shadow-xl hidden group-hover:block">
                             <a href="{{ route('filament.patient.pages.dashboard') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">continue as Patient</a>
                             <a href="{{ route('filament.doctor.pages.dashboard') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">continue as Doctor</a>
+                            <a href="{{ route('filament.admin.pages.dashboard') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50">continue as Admin</a>
                         </div>
                     </div>
                 </div>
