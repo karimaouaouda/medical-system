@@ -34,6 +34,7 @@ class DoctorPanelProvider extends PanelProvider
             ->registration(DoctorRegister::class)
             ->profile(DoctorProfilePage::class, false)
             ->databaseNotifications()
+            ->databaseNotificationsPolling("2s")
             ->colors([
                 'primary' => Color::Green,
             ])

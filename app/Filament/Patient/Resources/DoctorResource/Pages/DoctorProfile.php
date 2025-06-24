@@ -34,6 +34,12 @@ class DoctorProfile extends ViewRecord
             ->title("request sent")
             ->success()
             ->send();
+
+        Notification::make()
+            ->title("new follow request")
+            ->body(sprintf("patient %s request to follow you", Filament::auth()->user()->name))
+            ->success()
+            ->sendToDatabase($this->record);
     }
 
     public function unfollowDoctor(){

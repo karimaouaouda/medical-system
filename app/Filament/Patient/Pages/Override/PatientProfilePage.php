@@ -2,11 +2,15 @@
 
 namespace App\Filament\Patient\Pages\Override;
 
+use Filament\Facades\Filament;
 use Filament\Forms\Components\Actions;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Hidden;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\TimePicker;
 use Filament\Forms\Form;
 use Filament\Pages\Auth\EditProfile;
 use Filament\Pages\Page;
@@ -21,24 +25,51 @@ class PatientProfilePage extends EditProfile
         'height' => '',
         'weight' => '',
         'blood_type' => '',
+        'meals' => []
     ];
+
+    public function mount(): void
+    {
+        parent::mount();
+
+        $data = $this->getUser()->patientProfile->toArray();
+
+        $this->callHook('beforeFill');
+
+        $data = $this->mutateFormDataBeforeFill($data);
+
+        $this->profileInformationForm->fill($data);
+
+        $this->callHook('afterFill');
+    }
+
     protected function getForms(): array
     {
         return [
             'form' => $this->form(
                 $this->makeForm()
                     ->schema([
-                        $this->getAvatarFormComponent(),
-                        $this->getNameFormComponent(),
-                        $this->getEmailFormComponent(),
-                        $this->getPasswordFormComponent(),
-                        $this->getPasswordConfirmationFormComponent(),
+                        Section::make('basic information')
+                            ->icon('heroicon-o-user-circle')
+                            ->description('Please provide accurate profile information.')
+                            ->collapsible()
+                            ->collapsed()
+                            ->schema([
+                                $this->getAvatarFormComponent(),
+                                $this->getNameFormComponent(),
+                                $this->getEmailFormComponent(),
+                                $this->getPasswordFormComponent(),
+                                $this->getPasswordConfirmationFormComponent(),
+                            ])
                     ])
                     ->operation('edit')
                     ->model($this->getUser())
                     ->statePath('data')
                     ->inlineLabel(! static::isSimple()),
             ),
+            'profileInformationForm' => $this->profileInformationForm(
+                $this->makeForm()
+            )
         ];
     }
 
@@ -61,10 +92,8 @@ class PatientProfilePage extends EditProfile
                 ->collapsible()
                 ->collapsed()
                 ->schema([
-                    TextInput::make('user_id')
-                        ->label('User ID')
-                        ->required()
-                        ->numeric(),
+                    Hidden::make('user_id')
+                        ->default(Filament::auth()->id()),
                     Select::make('blood_type')
                         ->label('Blood Type')
                         ->options([
@@ -90,6 +119,23 @@ class PatientProfilePage extends EditProfile
                         ->numeric()
                         ->minValue(50)
                         ->maxValue(300),
+                    Repeater::make('meals')
+                        ->hint('this information will be used to remind you')
+                        ->reorderable(false)
+                        ->deletable(false)
+                        ->schema([
+                            TimePicker::make('breakfast')
+                                ->seconds(false)
+                                ->required(),
+                            TimePicker::make('lunch')
+                                ->seconds(false)
+                                ->required(),
+                            TimePicker::make('dinner')
+                                ->seconds(false)
+                                ->required(),
+
+                        ])->maxItems(1)
+                        ->grow(false),
                     Actions::make([
                         Actions\Action::make('save')
                             ->action('saveProfileInfo')
@@ -124,6 +170,7 @@ class PatientProfilePage extends EditProfile
                 'height' => $data['height'],
                 'weight' => $data['weight'],
                 'blood_type' => $data['blood_type'],
+                'meals' => $data['meals']
             ]);
 
             // Provide feedback for successful save

@@ -32,6 +32,7 @@ class PatientPanelProvider extends PanelProvider
             ->profile(PatientProfilePage::class, false)
             ->registration(PatientRegister::class)
             ->databaseNotifications()
+            ->databaseNotificationsPolling("2s")
             ->colors([
                 'primary' => Color::Blue,
             ])

@@ -5,6 +5,7 @@ namespace App\Observers;
 use App\Enums\UserRole;
 use App\Models\User;
 use Filament\Notifications\Notification;
+use Filament\Notifications\Actions\Action;
 
 class UserObserver
 {
@@ -78,9 +79,8 @@ class UserObserver
         //
     }
 
-    private function doctorCreatedEvent(User $user)
+    private function doctorCreatedEvent(User $user): void
     {
-
     }
 
     private function patientCreatedEvent(User $user)
@@ -92,13 +92,6 @@ class UserObserver
             'meals' => [['breakfast' => '08:00', 'lunch'=> '12:00', 'dinner' => '20:00']],
         ]);
 
-        $user->insulineSettings()
-            ->create([
-                'doctor_id' => null,
-                'target_glucose' => 120,
-                'correction_factor' => 50,
-                'carb_ratio' => 10,
-            ]);
 
         Notification::make()
             ->title("please review your information")

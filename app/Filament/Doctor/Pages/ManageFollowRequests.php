@@ -4,6 +4,8 @@ namespace App\Filament\Doctor\Pages;
 
 use App\Enums\FollowRequestStatus;
 use App\Models\FollowRequest;
+use Filament\Facades\Filament;
+use Filament\Notifications\Notification;
 use Filament\Tables\Actions\Action;
 use Filament\Pages\Page;
 use Filament\Tables;
@@ -35,7 +37,15 @@ class ManageFollowRequests extends Page implements HasTable
                 Action::make('accept')
                     ->label('Accept')
                     ->visible(fn (FollowRequest $record) => $record->status === FollowRequestStatus::Pending)
-                    ->action(fn (FollowRequest $record) => $record->update(['status' => FollowRequestStatus::Accepted])),
+                    ->action(function(FollowRequest $record){
+                        $record->update(['status' => FollowRequestStatus::Accepted]);
+                        Notification::make()
+                            ->title('follow request accepted')
+                            ->body(sprintf("doctor %s accepts your request", Filament::auth()->user()->name))
+                            ->info()
+                            ->sendToDatabase($record->patient);
+
+                    }),
                 Action::make('decline')
                     ->label('Decline')
                     ->color('danger')

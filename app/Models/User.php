@@ -4,12 +4,14 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Enums\UserRoles;
+use App\Observers\UserObserver;
 use App\Traits\HasAddress;
 use App\Traits\HasContact;
 use App\Traits\HasProfile;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
 use Filament\Panel;
+use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -17,6 +19,7 @@ use Illuminate\Support\Str;
 use App\Traits\HasDoctorRole;
 use App\Traits\HasPatientRole;
 
+#[ObservedBy(UserObserver::class)]
 class User extends Authenticatable implements FilamentUser, HasAvatar
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */

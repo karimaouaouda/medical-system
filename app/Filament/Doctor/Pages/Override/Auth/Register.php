@@ -109,7 +109,7 @@ class Register extends BaseRegister
 
             $user = $this->handleRegistration($data);
 
-            $user->profile()->create([
+            $user->doctorProfile()->create([
                 'speciality_id' => $data['speciality_id'],
                 'document_path' => $data['document_path']
             ]);

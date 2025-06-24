@@ -21,6 +21,12 @@ class MedicationResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getEloquentQuery(): Builder
+    {
+        return Medication::query()
+            ->where('doctor_id', Auth::id());
+    }
+
     public static function form(Form $form): Form
     {
         return $form
