@@ -7,6 +7,7 @@ use App\Enums\UserRole;
 use App\Models\FollowRequest;
 use App\Models\User;
 use Filament\Pages\Page;
+use Illuminate\Database\Eloquent\Builder;
 
 class SearchDoctors extends Page
 {
@@ -22,6 +23,9 @@ class SearchDoctors extends Page
     {
         return User::query()
             ->where('role', UserRole::Doctor)
+            ->whereHas('doctorProfile', function(Builder $query){
+                $query->whereNotNull('approved_at');
+            })
             ->when($this->search, function ($query) {
                 $query->where('name', 'like', '%' . $this->search . '%');
             })
