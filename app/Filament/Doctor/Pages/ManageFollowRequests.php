@@ -30,6 +30,7 @@ class ManageFollowRequests extends Page implements HasTable
                 Tables\Columns\TextColumn::make('patient.name')
                     ->label('Patient'),
                 Tables\Columns\TextColumn::make('patient.email')
+                    ->label('email')
                     ->badge(),
                 Tables\Columns\TextColumn::make('status'),
             ])
