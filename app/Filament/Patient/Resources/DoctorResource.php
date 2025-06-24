@@ -28,9 +28,7 @@ class DoctorResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         return User::query()
-            ->whereHas('patients', function(Builder $query) {
-                $query->where('patient_id', Filament::auth()->id());
-            });
+            ->where('role', 'doctor');
     }
 
     public static function canCreate(): bool
@@ -46,6 +44,9 @@ class DoctorResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->query(static::getEloquentQuery()->whereHas('patients', function(Builder $query) {
+                $query->where('patient_id', Filament::auth()->id());
+            }))
             ->columns([
                 Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\TextColumn::make('email'),
